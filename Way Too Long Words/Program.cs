@@ -1,4 +1,5 @@
 ﻿using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Way_Too_Long_Words
 {
@@ -13,7 +14,10 @@ namespace Way_Too_Long_Words
             {
                 arr[i] = reader.Next();
             }
-            for (int i = 0; i < n; i++)
+            Console.WriteLine(OutPut( arr));
+        }
+        public static string OutPut(string[] arr) {
+            for (int i = 0; i < arr.Length; i++)
             {
                 int count = arr[i].Length;
                 if (arr[i].Length <= 10)
@@ -24,7 +28,7 @@ namespace Way_Too_Long_Words
                 {
                     string first = arr[i][0].ToString();
                     string last = arr[i][count - 1].ToString();
-                    Console.WriteLine(first.ToLower() + (count - 2) + last.ToLower());
+                    return (first.ToLower() + (count - 2) + last.ToLower());
                 }
             }
         }
