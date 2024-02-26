@@ -1,33 +1,24 @@
-﻿namespace Petya_and_Strings
+﻿namespace Soilder_and_Bananas
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Reader rd = new Reader();
-            string s1 = rd.Next();
-            string s2 = rd.Next();
-            if (s1.ToLower() == s2.ToLower()) {
-                Console.WriteLine("0");
+            Reader reader = new Reader();
+            var cost = reader.NextInt();
+            var money = reader.NextInt();
+            var banana = reader.NextInt();
+            var sum = 0;
+            for (int i = 0; i <= banana; i++) {
+                sum = sum + cost * i;
             }
-            char[] ss1 = (s1.ToLower()).ToCharArray();
-            char[] ss2 = (s2.ToLower()).ToCharArray();
-            int count1 = 0;
-            int count2 = 0;
-            for (int i = 0; i < s1.Length; i++) {
-                count1 = count1 + ss1[i];
-            }
-            for (int i = 0; i < s2.Length; i++)
+            if (sum <= money)
             {
-                count2 = count2 + ss2[i];
+                Console.WriteLine(0);
             }
-            if (count1 > count2) {
-                Console.WriteLine("1");
+            else {
+                Console.WriteLine(sum - money);
             }
-            if (count1 < count2) { 
-                Console.WriteLine("-1");
-            }
-
         }
         class Reader
         {

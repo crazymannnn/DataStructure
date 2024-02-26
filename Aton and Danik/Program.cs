@@ -1,33 +1,26 @@
-﻿namespace Petya_and_Strings
+﻿namespace Aton_and_Danik
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Reader rd = new Reader();
-            string s1 = rd.Next();
-            string s2 = rd.Next();
-            if (s1.ToLower() == s2.ToLower()) {
-                Console.WriteLine("0");
+            Reader reader = new Reader();
+            var n = reader.NextInt();
+            var s = reader.Next();
+            var aton = 0;
+            for (int i = 0; i < n; i++) {
+                if (s[i] == 'A') {
+                    aton++;
+                } 
             }
-            char[] ss1 = (s1.ToLower()).ToCharArray();
-            char[] ss2 = (s2.ToLower()).ToCharArray();
-            int count1 = 0;
-            int count2 = 0;
-            for (int i = 0; i < s1.Length; i++) {
-                count1 = count1 + ss1[i];
+            var danik = n - aton;
+            if (aton > danik) {
+                Console.WriteLine("Anton");
+            } else if (aton < danik) {
+                Console.WriteLine("Danik");
+            } else {
+                Console.WriteLine("Friendship");
             }
-            for (int i = 0; i < s2.Length; i++)
-            {
-                count2 = count2 + ss2[i];
-            }
-            if (count1 > count2) {
-                Console.WriteLine("1");
-            }
-            if (count1 < count2) { 
-                Console.WriteLine("-1");
-            }
-
         }
         class Reader
         {
