@@ -1,4 +1,6 @@
-﻿namespace spojEICREDI2
+﻿using System.Security.Cryptography.X509Certificates;
+
+namespace spojEICREDI2
 {
     internal class Program
     {
@@ -7,30 +9,33 @@
             Reader rd = new Reader();
             var numOfstudent = rd.NextInt();
             var listofstudent = new List<Student>();
+            var scores = new List<int>();
             for (int i = 0; i < numOfstudent; i++) {
-                var man = new Student
+                var man = new Student()
                 {
                     Name = rd.Next(),
                     Subject = rd.NextInt(),
                 };
-                for (int j = 0; j < man.Subject; j++) {
-                    man.Score.Add(rd.NextInt());
+                for (int j = 0; j < man.Subject; j++) { 
+                    var score = rd.NextInt();
+                    if (score >= 50) {
+                        man.Score.Add(score);
+                        scores.Add(score);
+                    }
                 }
                 listofstudent.Add(man);
-            }          
-            foreach (var pp in listofstudent) {
-                var finalresult = checkScore(pp);
-                Console.WriteLine($"{pp.Name} {pp.Score} {finalresult}");
+            }
+            foreach (var name in listofstudent) {
+                Console.Write($"{name.Name}");
             }
         }
 
-        public static List<int> groupedScore(List<Student> man)
-
-        public static int checkScore(Student man) {
-            var passedsubject = man.Score.Count(i => i >= 50);
-            var sumscore = (from num in man.Score where num >= 50 select num).Sum();
-            return sumscore / passedsubject;
+        public static int avrScore(Student man) { 
+            var sum = man.Score.Sum();
+            var num = man.Score.Count(x => x >= 50);
+            return sum / num;
         }
+
 
 
 
