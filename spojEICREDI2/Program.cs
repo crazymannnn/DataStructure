@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace spojEICREDI2
 {
@@ -8,37 +10,62 @@ namespace spojEICREDI2
         {
             Reader rd = new Reader();
             var numOfstudent = rd.NextInt();
-            var listofstudent = new List<Student>();
-            var scores = new List<int>();
-            for (int i = 0; i < numOfstudent; i++) {
+            var students = new List<Student>();
+            for (int i = 0; i < numOfstudent; i++)
+            {
                 var man = new Student()
                 {
                     Name = rd.Next(),
                     Subject = rd.NextInt(),
                 };
-                for (int j = 0; j < man.Subject; j++) { 
+                for (int j = 0; j < man.Subject; j++)
+                {
                     var score = rd.NextInt();
-                    if (score >= 50) {
+                    if (score >= 50)
+                    {
                         man.Score.Add(score);
-                        scores.Add(score);
                     }
                 }
-                listofstudent.Add(man);
+                students.Add(man);
             }
-            foreach (var name in listofstudent) {
-                Console.Write($"{name.Name}");
+            var builder = new StringBuilder();
+
+            var finalresult = check(students);
+            foreach (var man in finalresult) {
+                builder.Append($"{man.Name} ");
+                foreach (var pp in man.Score) {
+                    builder.Append($"{pp} ");
+                }
+                builder.Append($"{man.Avr}\n");
             }
+            Console.WriteLine( builder.ToString() );
         }
 
-        public static int avrScore(Student man) { 
-            var sum = man.Score.Sum();
-            var num = man.Score.Count(x => x >= 50);
-            return sum / num;
+        public class Report {
+            public string Name { get; set; }
+            public List<int> Score { get; set; } = new List<int>();
+            public double Avr { get; set; }
         }
 
+        public static List<Report> check(List<Student> students) {
+            var result = students
+                .Select(i => new Report() { 
+                    Name = i.Name,
+                    Score = i.Score,
+                    Avr = Avr(i)
+                })
+                .ToList();
+            return result;
+        }
 
-
-
+        public static int Avr(Student man) {
+            if (man.Score.Count() == 0) {
+                return 0;
+            }
+            int avr = (int)(man.Score.Average());
+            return avr;
+        }
+        
 
         public class Student { 
             public string Name { get; set; }
