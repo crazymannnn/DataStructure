@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Security.Cryptography.X509Certificates;
 
 namespace EIUSLS___Scholarships
 {
@@ -20,12 +21,25 @@ namespace EIUSLS___Scholarships
                 }
                 students.Add(student);
             }
+            var final = check(students);
+            int count = 0;
+            foreach (var pp in final) { 
+                Console.WriteLine(pp.Name);
+                count++;
+                if (count == 2) {
+                    break;
+                }
+            }
         }
 
-        public class List<Student> check(Student student) {
-            int max = 0;
-
+        public static List<Student> check(List<Student> students) { 
+            var result = students
+                .OrderByDescending(x => x.Score.Average())
+                .ToList();
+            return result;
         }
+
+
 
         public class Student { 
             public string Name { get; set; }
